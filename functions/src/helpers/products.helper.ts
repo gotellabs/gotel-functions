@@ -39,6 +39,27 @@ export default class Products extends FirebaseService {
     }
   }
 
+
+  async fetchAllProductsByHotel(hotelId: string): Promise<Result> {
+    try {
+      
+        const result = new Array();
+        const snapshot = await this.firestore.collection("products").where("hotelId","==",hotelId).get();
+        snapshot.forEach(async products => {
+          const id = {_id: products.id}
+          const data = products.data()
+          const resolveObjects =  Object.assign({}, id, data)
+          await result.push(resolveObjects);
+        });
+        return Promise.resolve({ success: true, data :result });
+      
+    } catch (error) {
+      console.error(error);
+      return Promise.reject({ success: false, error });
+    }
+  }
+
+
   /**
    * 
    * @param id Get `ProductList` with the specified `id`

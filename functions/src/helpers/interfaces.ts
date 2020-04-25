@@ -41,6 +41,7 @@ export interface Addon{
 }
 
 export interface Product{
+    hotelId:string,
     name:string,
     description: string,
     stock: number,
