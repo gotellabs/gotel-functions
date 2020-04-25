@@ -6,7 +6,8 @@ const rooms = new Rooms();
 
 export async function handleAddRooms(req : Request, res: Response){
     try{
-        const {hotelId, name, description, stock} = req.body
+        const {hotelId} = req.params;
+        const {name, description, stock} = req.body
         const newRoom = await rooms.addRooms({hotelId, name, description, stock});
         res.send(newRoom)
     }catch(error){
@@ -18,6 +19,17 @@ export async function handleAddRooms(req : Request, res: Response){
 export async function handleFetchRooms(req: Request, res : Response){
     try {
         const fetch = await rooms.fetchAllRooms();
+        res.send(fetch)
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(error)
+    }
+}
+
+export async function handleFetchRoomsByHotel(req: Request, res : Response){
+    try {
+        const {hotelId} = req.params;
+        const fetch = await rooms.fetchAllRoomsByHotel(hotelId);
         res.send(fetch)
     } catch (error) {
         console.error(error)

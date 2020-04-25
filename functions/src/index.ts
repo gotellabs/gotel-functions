@@ -10,8 +10,10 @@ import * as cors from 'cors';
 const app = express();
 app.use(cors());
 
-const hotels = require('./api/hotels.api')
+const hotels = require('./api/hotels.api');
+const rooms = require('./api/rooms.api');
 app.use('/hotels', hotels);
+app.use('/', rooms);
 
 export const helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");
