@@ -1,5 +1,5 @@
 import FirebaseService from "./firebase.helper";
-import {Hotel, AddonHotel, Result, ResultId} from './interfaces'
+import {Hotel, AddonHotel, Result, ResultId, PhotoHotel} from './interfaces'
 
 
 //extend the FIrebase Helper class
@@ -76,6 +76,7 @@ export default class Hotels extends FirebaseService {
       return Promise.reject({ success: false, error });
     }
   }
+
 
   /**
    * 

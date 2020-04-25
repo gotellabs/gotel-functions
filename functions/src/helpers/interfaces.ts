@@ -51,18 +51,10 @@ export interface Product{
 }
 
 export interface Photo{
+    hotelId:string,
+    roomId:string,
     description: string,
     imageUrl:string
-}
-
-export interface PhotoHotel{
-    photoId: string,
-    hotelId:string
-}
-
-export interface PhotoRoom{
-    photoId:string,
-    roomId:string
 }
 
 export interface AddonRoom{
