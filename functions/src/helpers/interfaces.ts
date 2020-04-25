@@ -40,16 +40,6 @@ export interface Addon{
     type:string
 }
 
-export interface AddonRoom{
-    roomId:string,
-    addonId:string
-}
-
-export interface AddonHotel{
-    hotelId:string,
-    addonId:string
-}
-
 export interface Product{
     name:string,
     description: string,
@@ -72,4 +62,14 @@ export interface PhotoHotel{
 export interface PhotoRoom{
     photoId:string,
     roomId:string
+}
+
+export interface AddonRoom{
+    roomId:string,
+    addonId:string
+}
+
+export interface AddonHotel{
+    hotelId:string,
+    addonId:string
 }
