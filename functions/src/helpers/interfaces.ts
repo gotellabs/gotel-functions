@@ -51,8 +51,8 @@ export interface Product {
 }
 
 export interface Photo {
-    hotelId: string,
-    roomId: string,
+    hotelId?: string,
+    roomId?: string,
     description: string,
     imageUrl: string
 }
