@@ -1,9 +1,11 @@
 import * as express from "express";
-import {handleAddAddons, 
-  handleDeleteAddonById, 
+import {
+  handleAddAddons,
+  handleDeleteAddonById,
   handleFetchAddons,
   handleFetchAddonsById,
-  handleUpdateAddonById} from '../controllers/addons.controller';
+  handleUpdateAddonById
+} from '../controllers/addons.controller';
 
 const router = express.Router();
 

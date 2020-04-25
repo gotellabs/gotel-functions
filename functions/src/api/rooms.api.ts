@@ -1,12 +1,14 @@
 import * as express from "express";
-import {handleAddRooms, 
-  handleDeleteRoomById, 
+import {
+  handleAddRooms,
+  handleDeleteRoomById,
   handleFetchRooms,
   handleFetchRoomsById,
   handleFetchRoomsByHotel,
   handleFetchAddons,
   handleAddAddons,
-  handleUpdateRoomById} from '../controllers/rooms.controller';
+  handleUpdateRoomById
+} from '../controllers/rooms.controller';
 
 const router = express.Router();
 

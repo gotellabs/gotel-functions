@@ -4,18 +4,18 @@ import { Request, Response } from "express";
 
 const photos = new Photos();
 
-export async function handleAddPhotos(req : Request, res: Response){
-    try{
-        const {description, imageUrl} = req.body
-        const newPhoto = await photos.addPhotos({description, imageUrl});
+export async function handleAddPhotos(req: Request, res: Response) {
+    try {
+        const { description, imageUrl } = req.body
+        const newPhoto = await photos.addPhotos({ description, imageUrl });
         res.send(newPhoto)
-    }catch(error){
+    } catch (error) {
         console.error(error)
         res.status(500).send(error)
     }
 }
 
-export async function handleFetchPhotos(req: Request, res : Response){
+export async function handleFetchPhotos(req: Request, res: Response) {
     try {
         const fetch = await photos.fetchAllPhotos();
         res.send(fetch)
@@ -25,9 +25,9 @@ export async function handleFetchPhotos(req: Request, res : Response){
     }
 }
 
-export async function handleFetchPhotosById(req : Request, res: Response){
+export async function handleFetchPhotosById(req: Request, res: Response) {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const fetch = await photos.fetchPhotosById(id);
         res.send(fetch)
     } catch (error) {
@@ -36,9 +36,9 @@ export async function handleFetchPhotosById(req : Request, res: Response){
     }
 }
 
-export async function handleUpdatePhotoById(req : Request, res: Response){
+export async function handleUpdatePhotoById(req: Request, res: Response) {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const fetch = await photos.updatePhotoById(id, req.body);
         res.send(fetch)
     } catch (error) {
@@ -47,9 +47,9 @@ export async function handleUpdatePhotoById(req : Request, res: Response){
     }
 }
 
-export async function handleDeletePhotoById(req : Request, res: Response){
+export async function handleDeletePhotoById(req: Request, res: Response) {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const fetch = await photos.deltePhotoById(id);
         res.send(fetch)
     } catch (error) {

@@ -1,10 +1,12 @@
 import * as express from "express";
-import {handleAddProducts, 
-  handleDeleteProductById, 
+import {
+  handleAddProducts,
+  handleDeleteProductById,
   handleFetchProducts,
   handleFetchProductsById,
   handleFetchProductsByHotel,
-  handleUpdateProductById} from '../controllers/products.controller';
+  handleUpdateProductById
+} from '../controllers/products.controller';
 
 const router = express.Router();
 

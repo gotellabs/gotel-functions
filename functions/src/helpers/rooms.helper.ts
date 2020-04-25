@@ -1,5 +1,5 @@
 import FirebaseService from "./firebase.helper";
-import {Room, Result, ResultId, AddonRoom} from './interfaces'
+import { Room, Result, ResultId, AddonRoom } from './interfaces'
 
 
 //extend the FIrebase Helper class
@@ -7,10 +7,10 @@ export default class Rooms extends FirebaseService {
 
   async addRooms(roomsObject: Room): Promise<ResultId> {
     try {
-        const rooms = await this.firestore.collection("rooms").add(roomsObject);
-        const snapshot = await rooms.get();
-        return Promise.resolve({ success: true, data: snapshot.data(), id:rooms.id });
-      
+      const rooms = await this.firestore.collection("rooms").add(roomsObject);
+      const snapshot = await rooms.get();
+      return Promise.resolve({ success: true, data: snapshot.data(), id: rooms.id });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -22,12 +22,12 @@ export default class Rooms extends FirebaseService {
 
       for (let index = 0; index < addons.length; index++) {
         const addonId = addons[index];
-        const addonRoom:AddonRoom = {addonId, roomId}
+        const addonRoom: AddonRoom = { addonId, roomId }
         await this.firestore.collection("rooms-addons").add(addonRoom);
       }
 
       return Promise.resolve({ success: true, data: addons, id: roomId });
-      
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -39,38 +39,38 @@ export default class Rooms extends FirebaseService {
    */
   async fetchAllRooms(): Promise<Result> {
     try {
-      
-        const result = new Array();
-        const snapshot = await this.firestore.collection("rooms").get();
-        snapshot.forEach(async rooms => {
-          const id = {_id: rooms.id}
-          const data = rooms.data()
-          const resolveObjects =  Object.assign({}, id, data)
-          await result.push(resolveObjects);
-        });
-        return Promise.resolve({ success: true, data :result });
-      
+
+      const result = new Array();
+      const snapshot = await this.firestore.collection("rooms").get();
+      snapshot.forEach(async rooms => {
+        const id = { _id: rooms.id }
+        const data = rooms.data()
+        const resolveObjects = Object.assign({}, id, data)
+        await result.push(resolveObjects);
+      });
+      return Promise.resolve({ success: true, data: result });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
     }
   }
 
-  async fetchAllAddons(roomId:string): Promise<Result> {
+  async fetchAllAddons(roomId: string): Promise<Result> {
     try {
-      
-        const result = new Array();
-        const snapshot = await this.firestore.collection("rooms-addons").where("roomId","==",roomId).get();
-        
-        snapshot.forEach(async roomsAddons => {
-          const id = {_id: roomsAddons.id} 
-          const data = roomsAddons.data()
-          const resolveObjects =  Object.assign({}, id, data)
-          await result.push(resolveObjects);
-          
-        });
-        return Promise.resolve({ success: true, data :result});
-      
+
+      const result = new Array();
+      const snapshot = await this.firestore.collection("rooms-addons").where("roomId", "==", roomId).get();
+
+      snapshot.forEach(async roomsAddons => {
+        const id = { _id: roomsAddons.id }
+        const data = roomsAddons.data()
+        const resolveObjects = Object.assign({}, id, data)
+        await result.push(resolveObjects);
+
+      });
+      return Promise.resolve({ success: true, data: result });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -79,17 +79,17 @@ export default class Rooms extends FirebaseService {
 
   async fetchAllRoomsByHotel(hotelId: string): Promise<Result> {
     try {
-      
-        const result = new Array();
-        const snapshot = await this.firestore.collection("rooms").where("hotelId","==",hotelId).get();
-        snapshot.forEach(async rooms => {
-          const id = {_id: rooms.id}
-          const data = rooms.data()
-          const resolveObjects =  Object.assign({}, id, data)
-          await result.push(resolveObjects);
-        });
-        return Promise.resolve({ success: true, data :result });
-      
+
+      const result = new Array();
+      const snapshot = await this.firestore.collection("rooms").where("hotelId", "==", hotelId).get();
+      snapshot.forEach(async rooms => {
+        const id = { _id: rooms.id }
+        const data = rooms.data()
+        const resolveObjects = Object.assign({}, id, data)
+        await result.push(resolveObjects);
+      });
+      return Promise.resolve({ success: true, data: result });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -102,11 +102,11 @@ export default class Rooms extends FirebaseService {
    */
   async fetchRoomsById(id: string): Promise<Result> {
     try {
-     
-        const rooms = await this.firestore.collection("rooms").doc(id);
-        const snapshot = await rooms.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-     
+
+      const rooms = await this.firestore.collection("rooms").doc(id);
+      const snapshot = await rooms.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -121,15 +121,15 @@ export default class Rooms extends FirebaseService {
    */
   async updateRoomById(id: string, updates: Room): Promise<Result> {
     try {
-     
-        const rooms = await this.firestore.collection("rooms").doc(id);
-        if (rooms) {
-          await rooms.update(updates);
-        }
-        const updated = await this.firestore.collection("rooms").doc(id);
-        const snapshot = await updated.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-     
+
+      const rooms = await this.firestore.collection("rooms").doc(id);
+      if (rooms) {
+        await rooms.update(updates);
+      }
+      const updated = await this.firestore.collection("rooms").doc(id);
+      const snapshot = await updated.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -142,15 +142,15 @@ export default class Rooms extends FirebaseService {
    */
   async delteRoomById(id: string): Promise<Result> {
     try {
-     
-        const rooms = await this.firestore.collection("rooms").doc(id);
-        if (rooms) {
-          await rooms.delete();
-        }
-        const deleted = await this.firestore.collection("rooms").doc(id);
-        const snapshot = await deleted.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-      
+
+      const rooms = await this.firestore.collection("rooms").doc(id);
+      if (rooms) {
+        await rooms.delete();
+      }
+      const deleted = await this.firestore.collection("rooms").doc(id);
+      const snapshot = await deleted.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });

@@ -1,9 +1,11 @@
 import * as express from "express";
-import {handleAddPhotos, 
-  handleDeletePhotoById, 
+import {
+  handleAddPhotos,
+  handleDeletePhotoById,
   handleFetchPhotos,
   handleFetchPhotosById,
-  handleUpdatePhotoById} from '../controllers/photo.controller';
+  handleUpdatePhotoById
+} from '../controllers/photo.controller';
 
 const router = express.Router();
 

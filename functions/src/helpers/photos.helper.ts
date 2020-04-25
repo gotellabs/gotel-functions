@@ -1,5 +1,5 @@
 import FirebaseService from "./firebase.helper";
-import {Photo, Result, ResultId} from './interfaces'
+import { Photo, Result, ResultId } from './interfaces'
 
 
 //extend the FIrebase Helper class
@@ -7,10 +7,10 @@ export default class Photos extends FirebaseService {
 
   async addPhotos(photosObject: Photo): Promise<ResultId> {
     try {
-        const photos = await this.firestore.collection("photos").add(photosObject);
-        const snapshot = await photos.get();
-        return Promise.resolve({ success: true, data: snapshot.data(), id:photos.id });
-      
+      const photos = await this.firestore.collection("photos").add(photosObject);
+      const snapshot = await photos.get();
+      return Promise.resolve({ success: true, data: snapshot.data(), id: photos.id });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -22,17 +22,17 @@ export default class Photos extends FirebaseService {
    */
   async fetchAllPhotos(): Promise<Result> {
     try {
-      
-        const result = new Array();
-        const snapshot = await this.firestore.collection("photos").get();
-        snapshot.forEach(async photos => {
-          const id = {_id: photos.id}
-          const data = photos.data()
-          const resolveObjects =  Object.assign({}, id, data)
-          await result.push(resolveObjects);
-        });
-        return Promise.resolve({ success: true, data :result });
-      
+
+      const result = new Array();
+      const snapshot = await this.firestore.collection("photos").get();
+      snapshot.forEach(async photos => {
+        const id = { _id: photos.id }
+        const data = photos.data()
+        const resolveObjects = Object.assign({}, id, data)
+        await result.push(resolveObjects);
+      });
+      return Promise.resolve({ success: true, data: result });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -45,11 +45,11 @@ export default class Photos extends FirebaseService {
    */
   async fetchPhotosById(id: string): Promise<Result> {
     try {
-     
-        const photos = await this.firestore.collection("photos").doc(id);
-        const snapshot = await photos.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-     
+
+      const photos = await this.firestore.collection("photos").doc(id);
+      const snapshot = await photos.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -64,15 +64,15 @@ export default class Photos extends FirebaseService {
    */
   async updatePhotoById(id: string, updates: Photo): Promise<Result> {
     try {
-     
-        const photos = await this.firestore.collection("photos").doc(id);
-        if (photos) {
-          await photos.update(updates);
-        }
-        const updated = await this.firestore.collection("photos").doc(id);
-        const snapshot = await updated.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-     
+
+      const photos = await this.firestore.collection("photos").doc(id);
+      if (photos) {
+        await photos.update(updates);
+      }
+      const updated = await this.firestore.collection("photos").doc(id);
+      const snapshot = await updated.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });
@@ -85,15 +85,15 @@ export default class Photos extends FirebaseService {
    */
   async deltePhotoById(id: string): Promise<Result> {
     try {
-     
-        const photos = await this.firestore.collection("photos").doc(id);
-        if (photos) {
-          await photos.delete();
-        }
-        const deleted = await this.firestore.collection("photos").doc(id);
-        const snapshot = await deleted.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
-      
+
+      const photos = await this.firestore.collection("photos").doc(id);
+      if (photos) {
+        await photos.delete();
+      }
+      const deleted = await this.firestore.collection("photos").doc(id);
+      const snapshot = await deleted.get();
+      return Promise.resolve({ success: true, data: snapshot.data() });
+
     } catch (error) {
       console.error(error);
       return Promise.reject({ success: false, error });

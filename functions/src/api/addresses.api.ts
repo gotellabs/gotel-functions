@@ -1,9 +1,11 @@
 import * as express from "express";
-import {handleAddAddresses, 
-  handleDeleteAddressById, 
+import {
+  handleAddAddresses,
+  handleDeleteAddressById,
   handleFetchAddresses,
   handleFetchAddressesById,
-  handleUpdateAddressById} from '../controllers/addresses.controller';
+  handleUpdateAddressById
+} from '../controllers/addresses.controller';
 
 const router = express.Router();
 
