@@ -13,10 +13,12 @@ app.use(cors());
 const hotels = require('./api/hotels.api');
 const rooms = require('./api/rooms.api');
 const products = require('./api/products.api');
+const addons = require('./api/addons.api');
 
 app.use('/hotels', hotels);
 app.use('/', rooms);
 app.use('/', products);
+app.use('/addons', addons);
 
 export const helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");

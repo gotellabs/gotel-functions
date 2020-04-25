@@ -25,6 +25,30 @@ export async function handleAddHotels(req : Request, res: Response){
     }
 }
 
+export async function handleAddAddons(req : Request, res: Response){
+    try{
+        const {addons} = req.body;
+        const {id} = req.params;
+
+        const newAddons = await hotels.addAddons(addons, id);
+        res.send(newAddons)
+    }catch(error){
+        console.error(error)
+        res.status(500).send(error)
+    }
+}
+
+export async function handleFetchAddons(req: Request, res : Response){
+    try {
+        const {id} = req.params;
+        const fetch = await hotels.fetchAllAddons(id);
+        res.send(fetch)
+    } catch (error) {
+        console.error(error)
+        res.status(500).send(error)
+    }
+}
+
 export async function handleFetchHotels(req: Request, res : Response){
     try {
         const fetch = await hotels.fetchAllHotels();
