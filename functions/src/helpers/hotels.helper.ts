@@ -1,15 +1,15 @@
 import FirebaseService from "./firebase.helper";
-import {Hotel, Result} from './interfaces'
+import {Hotel, Result, ResultId} from './interfaces'
 
 
 //extend the FIrebase Helper class
 export default class Hotels extends FirebaseService {
 
-  async addHotels(hotelsObject: Hotel): Promise<Result> {
+  async addHotels(hotelsObject: Hotel): Promise<ResultId> {
     try {
         const hotels = await this.firestore.collection("hotels").add(hotelsObject);
         const snapshot = await hotels.get();
-        return Promise.resolve({ success: true, data: snapshot.data() });
+        return Promise.resolve({ success: true, data: snapshot.data(), id: hotels.id });
       
     } catch (error) {
       console.error(error);
@@ -31,7 +31,7 @@ export default class Hotels extends FirebaseService {
           const resolveObjects =  Object.assign({}, id, data)
           await result.push(resolveObjects);
         });
-        return Promise.resolve({ success: true, data :result });
+        return Promise.resolve({ success: true, data :result});
       
     } catch (error) {
       console.error(error);
