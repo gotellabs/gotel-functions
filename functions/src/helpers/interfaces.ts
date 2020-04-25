@@ -9,8 +9,7 @@ export interface ResultId {
     id:string;
 }
 
-
-export interface Adress{
+export interface Address{
     country:string,
     city:string,
     district:string,
@@ -25,7 +24,7 @@ export interface Hotel{
     description: string,
     email : string,
     rate : number,
-    adressId: string
+    addressId: string
 }
 
 export interface Room{

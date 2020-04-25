@@ -1,23 +1,23 @@
 import Hotels from "../helpers/hotels.helper";
-import Adresses from '../helpers/adresses.helper';
+import Addresses from '../helpers/addresses.helper';
 
 import { Request, Response } from "express";
 
 
 const hotels = new Hotels();
-const adresses = new Adresses();
+const addresses = new Addresses();
 
 export async function handleAddHotels(req : Request, res: Response){
     try{
         const {name, phone, description, email, rate, address} = req.body
-        var newAdress = null
-        var adressId = "none";
+        var newAddress = null
+        var addressId = "none";
 
         if(address){
-            newAdress = await adresses.addAdresses(address);
-            adressId = newAdress.id;
+            newAddress = await addresses.addAddresses(address);
+            addressId = newAddress.id;
         }
-        const newHotel = await hotels.addHotels({name, phone, description, email, rate, adressId});
+        const newHotel = await hotels.addHotels({name, phone, description, email, rate, addressId});
         res.send(newHotel)
     }catch(error){
         console.error(error)
