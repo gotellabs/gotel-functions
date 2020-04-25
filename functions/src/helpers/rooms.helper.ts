@@ -1,5 +1,5 @@
 import FirebaseService from "./firebase.helper";
-import {Room, Result, ResultId} from './interfaces'
+import {Room, Result, ResultId, AddonRoom} from './interfaces'
 
 
 //extend the FIrebase Helper class
@@ -10,6 +10,23 @@ export default class Rooms extends FirebaseService {
         const rooms = await this.firestore.collection("rooms").add(roomsObject);
         const snapshot = await rooms.get();
         return Promise.resolve({ success: true, data: snapshot.data(), id:rooms.id });
+      
+    } catch (error) {
+      console.error(error);
+      return Promise.reject({ success: false, error });
+    }
+  }
+
+  async addAddons(addons: Array<string>, roomId: string): Promise<ResultId> {
+    try {
+
+      for (let index = 0; index < addons.length; index++) {
+        const addonId = addons[index];
+        const addonRoom:AddonRoom = {addonId, roomId}
+        await this.firestore.collection("rooms-addons").add(addonRoom);
+      }
+
+      return Promise.resolve({ success: true, data: addons, id: roomId });
       
     } catch (error) {
       console.error(error);
@@ -32,6 +49,27 @@ export default class Rooms extends FirebaseService {
           await result.push(resolveObjects);
         });
         return Promise.resolve({ success: true, data :result });
+      
+    } catch (error) {
+      console.error(error);
+      return Promise.reject({ success: false, error });
+    }
+  }
+
+  async fetchAllAddons(roomId:string): Promise<Result> {
+    try {
+      
+        const result = new Array();
+        const snapshot = await this.firestore.collection("rooms-addons").where("roomId","==",roomId).get();
+        
+        snapshot.forEach(async roomsAddons => {
+          const id = {_id: roomsAddons.id} 
+          const data = roomsAddons.data()
+          const resolveObjects =  Object.assign({}, id, data)
+          await result.push(resolveObjects);
+          
+        });
+        return Promise.resolve({ success: true, data :result});
       
     } catch (error) {
       console.error(error);

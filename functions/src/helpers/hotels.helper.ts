@@ -1,5 +1,5 @@
 import FirebaseService from "./firebase.helper";
-import {Hotel, AddonHotel, Result, ResultId, PhotoHotel} from './interfaces'
+import {Hotel, AddonHotel, Result, ResultId} from './interfaces'
 
 
 //extend the FIrebase Helper class
