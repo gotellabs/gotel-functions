@@ -10,8 +10,13 @@ const adresses = new Adresses();
 export async function handleAddHotels(req : Request, res: Response){
     try{
         const {name, phone, description, email, rate, address} = req.body
-        const newAdress = await adresses.addAdresses(address);
-        const adressId = newAdress.id;
+        var newAdress = null
+        var adressId = "none";
+
+        if(address){
+            newAdress = await adresses.addAdresses(address);
+            adressId = newAdress.id;
+        }
         const newHotel = await hotels.addHotels({name, phone, description, email, rate, adressId});
         res.send(newHotel)
     }catch(error){
