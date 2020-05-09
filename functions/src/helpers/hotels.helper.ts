@@ -42,12 +42,34 @@ export default class Hotels extends FirebaseService {
 
       const result = new Array();
       const snapshot = await this.firestore.collection("hotels").get();
-      snapshot.forEach(async hotels => {
-        const id = { _id: hotels.id }
-        const data = hotels.data()
+
+      for (let index = 0; index < snapshot.size; index++) {
+
+        const hotel = snapshot.docs[index];
+        const data = hotel.data();
+
+        //Get Address
+        const addressId = await hotel.get("addressId");
+        const address = await this.firestore.collection("addresses").doc(addressId);
+        const addressSnap = await address.get();
+
+        const resolveObj = Object.assign({}, addressSnap.data())
+        
+        //Get Address
+        const photos = await this.firestore.collection("photos").where("hotelId", "==", hotel.id).get();
+        const photosArray = new Array()
+        
+        photos.forEach(photo=>{
+          photosArray.push(photo.data())
+        });
+
+        console.error(photosArray)
+
+        const id = { _id: hotel.id, address: resolveObj, photos: photosArray}
         const resolveObjects = Object.assign({}, id, data)
         await result.push(resolveObjects);
-      });
+      }
+
       return Promise.resolve({ success: true, data: result });
 
     } catch (error) {
@@ -87,7 +109,29 @@ export default class Hotels extends FirebaseService {
 
       const hotels = await this.firestore.collection("hotels").doc(id);
       const snapshot = await hotels.get();
-      return Promise.resolve({ success: true, data: snapshot.data() });
+
+      const data = snapshot.data()
+
+      //Get Address
+      const addressId = await snapshot.get("addressId");
+      const address = await this.firestore.collection("addresses").doc(addressId);
+      const addressSnap = await address.get();
+
+      const addressObj = Object.assign({}, addressSnap.data())
+
+      //Get Address
+      const photos = await this.firestore.collection("photos").where("hotelId", "==", snapshot.id).get();
+      const photosArray = new Array()
+
+      photos.forEach(photo=>{
+        photosArray.push(photo.data())
+      });
+      
+      const _id = { _id: snapshot.id, address: addressObj, photos: photosArray}
+      const resolveObjects = Object.assign({}, _id, data)
+      console.error(resolveObjects)
+
+      return Promise.resolve({ success: true, data: resolveObjects });
 
     } catch (error) {
       console.error(error);
