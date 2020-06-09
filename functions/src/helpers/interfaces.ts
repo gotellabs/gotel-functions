@@ -16,6 +16,8 @@ export interface Address {
     street: string,
     number: number,
     zipcode: string,
+    lat: number,
+    lng: number
 }
 
 export interface Hotel {

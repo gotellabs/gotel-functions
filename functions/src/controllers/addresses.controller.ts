@@ -6,8 +6,8 @@ const addresses = new Addresses();
 
 export async function handleAddAddresses(req: Request, res: Response) {
     try {
-        const { country, city, district, street, number, zipcode } = req.body
-        const newAddress = await addresses.addAddresses({ country, city, district, street, number, zipcode });
+        const { country, city, district, street, number, zipcode, lat, lng } = req.body
+        const newAddress = await addresses.addAddresses({ country, city, district, street, number, zipcode, lat, lng });
         res.send(newAddress)
     } catch (error) {
         console.error(error)
